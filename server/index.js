@@ -6,6 +6,8 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 const connectDB = require('./config/db');
 const projectAssignmentRoutes = require('./routes/projectAssignments');
+const employeeRoutes = require('./routes/employees');
+const projectRoutes = require('./routes/projects');
 
 connectDB();
 
@@ -13,6 +15,8 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
+app.use('/api/employees', employeeRoutes);
+app.use('/api/projects', projectRoutes);
 app.use('/api/project-assignments', projectAssignmentRoutes);
 
 app.get('/', (req, res) => {
