@@ -1,9 +1,12 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
+require('dotenv').config({path: './server/.env'});
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+const connectDB = require('./config/db');
+
+connectDB();
 
 //Middleware
 app.use(cors());
