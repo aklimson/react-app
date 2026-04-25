@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 function AssignmentTable() {
   const [assignments, setAssignments] = useState([]);
+  const [sortOrder, setSortOrder] = useState("asc");
 
   const fetchAssignments = async () => {
     try {
@@ -17,6 +18,18 @@ function AssignmentTable() {
     fetchAssignments();
   }, []);
 
+  const sortByDate = () => {
+    const sorted = [...assignments].sort((a, b) => {
+      const dateA = new Date(a.start_date);
+      const dateB = new Date(b.start_date);
+
+      return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+    });
+
+    setAssignments(sorted);
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+  };
+
   return (
     <table
       border="1"
@@ -28,7 +41,9 @@ function AssignmentTable() {
           <th>Employee ID</th>
           <th>Employee Name</th>
           <th>Project Name</th>
-          <th>Start Date</th>
+          <th onClick={sortByDate} style={{ cursor: "pointer" }}>
+            Start Date {sortOrder === "asc" ? "↑" : "↓"}
+          </th>
         </tr>
       </thead>
 
@@ -38,9 +53,7 @@ function AssignmentTable() {
             <td>{assignment.employee.employee_id}</td>
             <td>{assignment.employee.full_name}</td>
             <td>{assignment.project.project_name}</td>
-            <td>
-              {new Date(assignment.start_date).toLocaleDateString()}
-            </td>
+            <td>{new Date(assignment.start_date).toLocaleDateString()}</td>
           </tr>
         ))}
       </tbody>
