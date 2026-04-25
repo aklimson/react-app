@@ -5,12 +5,15 @@ require('dotenv').config({path: './server/.env'});
 const app = express();
 const PORT = process.env.PORT || 4000;
 const connectDB = require('./config/db');
+const projectAssignmentRoutes = require('./routes/projectAssignments');
 
 connectDB();
 
 //Middleware
 app.use(cors());
 app.use(express.json());
+
+app.use('/api/project-assignments', projectAssignmentRoutes);
 
 app.get('/', (req, res) => {
     res.send('Server is running...');
