@@ -1,22 +1,12 @@
-import { useState, useEffect } from 'react'
-//import reactLogo from './assets/react.svg'
-//import viteLogo from '/vite.svg'
-import './App.css'
+import AssignmentTable from './components/AssignmentTable';
 
 function App() {
-  const [message, setMessage] = useState('')
-
-  useEffect(() => {
-    fetch('http://localhost:4000/api/message')
-    .then((res) => res.json())
-    .then((data) => setMessage(data.message));
-  }, []);
-
   return (
-    <div style = {{padding: 20}}>
-      <p>Backend message: {message}</p>
+    <div>
+      <h1>Project Assignments</h1>
+      <AssignmentTable/>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
